@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+  <!-- Essential Meta Tags -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Off-Grid Solar Calculator - Plan Your System Accurately</title>
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-B45PEDNDDW"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-B45PEDNDDW');
+  </script>
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://offgridsolarsystem.ca/" />
+
+  <!-- Preload and Styles -->
+  <link rel="preload" as="style" href="styles/styles.css" onload="this.onload=null;this.rel='stylesheet'" />
+  <link rel="stylesheet" href="styles/styles.css" />
+
+  <!-- Favicon -->
+  <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+  
+  <!-- Google Adsebse Auto Ads (delay load) -->
+  <script>
+  let adsLoaded = false;
+  function loadAdsOnScroll() {
+    if (!adsLoaded) {
+      const adsScript = document.createElement('script');
+      adsScript.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4032629123494722";
+      adsScript.async = true;
+      adsScript.crossOrigin = "anonymous";
+      document.head.appendChild(adsScript);
+      adsLoaded = true;
+      console.log("✅ AdSense script loaded after scroll");
+    }
+  }
+
+  window.addEventListener('scroll', loadAdsOnScroll, { once: true });
+</script>
+</head>
+ 
+<body>
+<!-- Back-to-top anchor -->
+<div id="home"></div>
+<!-- Responsive Header Menu -->
+<div id="header-placeholder"></div>
+<!-- Main Calculator Container -->
+<div class="container">
+<div id="hero-placeholder"></div>
+<div id="nav-placeholder"></div>
+<!-- 1. Load Calculator -->
+<section class="calculator" id="loadCalculatorContainer">
+  <h2>1. Load Calculator</h2>
+  <p>
+    <span></span> Start by selecting a common appliance or entering your own. We’ll calculate your total monthly energy usage in <strong>kWh</strong>.
+  </p>
+
+  <form>
+    <fieldset style="border: none; margin: 0; padding: 0;">
+
+      <!-- Add Appliance (dropdown + custom) -->
+      <h3 style="margin-bottom: 10px; color: #2d6c5d;">Add an Appliance</h3>
+
+      <!-- Dropdown -->
+      <div style="margin-bottom: 15px;">
+        <label for="applianceDropdown" style="font-weight: 600;"></label>
+        <select id="applianceDropdown" onchange="fillSelectedAppliance()" style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #ccc; margin-top: 6px;">
+          <option value="">-- Select from common appliances --</option>
+        </select>
+      </div>
+
+      <!-- Review Table -->
+      <h3 style="margin-top:40px;color:#2d6c5d;">Review &amp; Calculate</h3>
+
+<!-- 1️⃣  NEW wrapper -->
+<div class="table-scroll">
+  <table class="appliance-table" style="width:100%;border-collapse:collapse;margin-top:15px;">
+    <thead style="background:#f1f1f1;">
+      <tr>
+        <th style="text-align:left;padding:8px;">Appliance</th>
+        <th style="text-align:left;padding:8px;">Watts&nbsp;(W)</th>
+        <th style="text-align:left;padding:8px;">Hours&nbsp;(monthly)</th>
+        <th style="text-align:left;padding:8px;">kWh/mo</th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody id="applianceList">
+      <tr class="appliance-item">
+        <td><input type="text"  placeholder="Appliance" aria-label="Appliance name"></td>
+        <td><input type="number" placeholder="Watts"     aria-label="Wattage in watts"></td>
+        <td><input type="number" placeholder="Hours"     aria-label="Usage hours per month"></td>
+        <td class="kwh-cell" aria-live="polite">0</td>
+        <td><button type="button" onclick="removeRow(this)" aria-label="Remove this row">X</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+  
+  <!-- helper note -->
+  <p class="hours-tip" style="margin-top:6px;font-size:13px;color:#777;">
+    💡 60 hours per month ≈ 2 hours per day.
+  </p>  
+
+     <!-- 🔘 Buttons -->
+<div class="button-group">
+  <button type="button"
+          class="add-row-btn"
+          onclick="addRow()">
+    + Add Row
+  </button>
+
+  <button type="button"
+          class="calculate-btn"
+          onclick="calculateLoad()">
+    Calculate
+  </button>
+
+  <button type="button"
+          class="reset-btn secondary"
+          onclick="resetCalculator()">
+    Reset
+  </button>
+</div>
+      
+    </fieldset>
+  </form>
+
+  <!-- 📊 Final Result -->
+<div class="result" id="resultDisplay" role="alert"></div>
+
+<details class="qs-details">
+  <summary>⚡ Quick Load Sizing Guide</summary>
+
+  <div class="qs-item">
+    <p>
+      A small setup with basic lighting, phone charging, and a mini fridge may consume <strong>100–200 kWh/month</strong>.
+    </p>
+  </div>
+
+  <div class="qs-item">
+    <p>
+      A modest off-grid cabin with lights, a full-size fridge, laptop, and water pump may use <strong>300–500 kWh/month</strong>.
+    </p>
+  </div>
+
+  <div class="qs-item">
+    <p>
+      A full-time off-grid home running multiple appliances (washer, TV, power tools) might require <strong>600–900 kWh/month</strong> or more.
+    </p>
+  </div>
+
+  <p class="qs-note">
+    These estimates assume average appliance usage and off-grid efficiency loss.  
+    Source: <a href="https://www.energy.gov/energysaver/estimating-appliance-and-home-electronic-energy-use" target="_blank" rel="noopener">Energy Saver</a>.
+  </p>
+</details>
+</section>
+<!-- Affiliate Recommendation Section -->
+<div class="affiliate-highlight-card">
+  <p class="affiliate-title">Not sure how much power your appliances really draw?</p>
+<p>
+  The <strong>P3 Kill A Watt™</strong> reveals the real energy use of any plugged-in device — so you can size your solar system with confidence and avoid expensive guesswork.
+  <br>
+  <strong><small>⭐ 4.5 (12,000+ reviews)</strong> — trusted by solar DIYers</small>
+</p>
+<a href="https://www.amazon.ca/P3-P3IP4400-Electricity-Usage-Monitor/dp/B00009MDBU?tag=csingh306-20"
+   class="cta-button cta-yellow" target="_blank">
+  View on Amazon
+</a>
+</div>
+
+<!-- 2. Solar Panel Calculator -->
+<section class="calculator" id="solarPanelCalculatorContainer">
+  <h2>2. Solar Panel Sizing</h2>
+  <p> Calculate your solar panel needs based on your energy consumption, sunlight hours, system efficiency, and panel wattage.</p>  
+  
+  
+  <form class="panel-form">
+    <fieldset>
+
+      
+      <!-- Daily Energy Usage -->
+      <div class="input-group">
+        <label for="dailyUsage">
+          Daily Energy Usage (kWh)
+          <span class="tooltip-icon" tabindex="0" title="Estimate your total daily energy usage in kilowatt-hours (kWh). For example, 5.0 kWh.">
+            ℹ️
+          </span>
+        </label>
+        <input id="dailyUsage" min="0" placeholder="e.g., 5.0" required step="0.1" type="number"/>
+      </div>
+      
+      <!-- Peak Sun Hours -->
+      <div class="input-group">
+        <label for="sunlightHours">
+          Peak Sun Hours (hr/day)
+          <span class="tooltip-icon" tabindex="0" title="Average hours of strong sunlight per day. For instance, 5–6 hours.">
+            ℹ️
+          </span>
+        </label>
+        <input id="sunlightHours" max="24" min="0" placeholder="e.g., 6.0" required step="0.5" type="number"/>
+      </div>
+      
+      <!-- System Efficiency -->
+      <div class="input-group">
+        <label for="systemEfficiency">
+          System Efficiency (%)
+          <span class="tooltip-icon" tabindex="0" title="Accounts for inverter, wiring, shading, and other losses. 80% is typical, but it may vary based on your installation.">
+            ℹ️
+          </span>
+        </label>
+        <input id="systemEfficiency" max="100" min="0" required type="number" value="80"/>
+      </div>
+      
+      <!-- Panel Wattage -->
+<div class="input-group">
+  <label for="panelWattage">
+    Solar Panel Wattage (W)
+    <span class="tooltip-icon" title="Rated wattage of each solar panel. For example, 400W.">ℹ️</span>
+  </label>
+  <input id="panelWattage" min="0" placeholder="e.g., 400" required type="number" value="400"/>
+</div>
+
+<!-- ✨ NEW: System Voltage (for controller sizing) -->
+<div class="input-group">
+  <label for="pvSystemVoltage">
+    System Voltage (V)
+    <span class="tooltip-icon"
+          title="Select the DC bus voltage your array will charge (12 V, 24 V, or 48 V).">ℹ️</span>
+  </label>
+  <select id="pvSystemVoltage">
+    <option value="12">12 V</option>
+    <option value="24">24 V</option>
+    <option value="48" selected>48 V</option>
+  </select>
+</div>
+    </fieldset>
+    
+    <!-- Calculate & Reset Buttons -->
+    <button type="button"
+    class="calculate-btn"
+    onclick="calculatePanels()">
+Calculate Panels Needed
+</button>
+
+<button type="button"
+    class="reset-btn secondary"
+    onclick="resetPanelCalc()">
+Reset
+</button>
+
+  </form>
+
+  
+  <!-- Results Section -->
+  <div class="result" id="panelResult" role="alert"></div>
+  <p id="controllerBadge" class="result" style="display:none;"></p>
+  
+    
+<!-- Quick Solar Panel Sizing Guide (expanded) -->
+<details class="qs-details">
+  <summary>⚡ Quick Solar Panel Sizing Guide</summary>
+
+  <div class="qs-item">
+    <p>
+      If your daily energy usage is <strong>2–4 kWh/day</strong>, you'll typically need a solar array of 
+      <strong>600–1,000W</strong>—roughly <strong>2–3 panels</strong> rated at 350–400W. Ideal for basic off-grid needs like lights, a small fridge, and charging devices.
+    </p>
+  </div>
+
+  <div class="qs-item">
+    <p>
+      For users consuming <strong>5–8 kWh/day</strong>, consider a solar array in the range of 
+      <strong>1,500–2,400W</strong> (approx. <strong>4–7 panels</strong>) to cover typical household loads like lighting, appliances, and electronics.
+    </p>
+  </div>
+
+  <div class="qs-item">
+    <p>
+      If your daily usage is <strong>8–12 kWh/day</strong>, you'll likely require 
+      <strong>2,800–4,000W</strong> of solar capacity—around <strong>8–12 panels</strong>—to meet energy needs for full off-grid living, including high-demand appliances.
+    </p>
+  </div>
+
+  <p class="qs-note">
+    These estimates assume 4–5 peak sun hours/day and system efficiency between 75–85%, using 350–400W solar panels.  
+    Sources:
+    <a href="https://www.energy.gov/energysaver/estimating-appliance-and-home-electronic-energy-use" target="_blank" rel="noopener">Energy Saver</a> &amp;
+    <a href="https://www.cleanenergyreviews.info/blog/solar-system-size-guide" target="_blank" rel="noopener">Clean Energy Reviews</a>.
+  </p>
+</details>
+</section>
+  <!-- Affiliate Recommendation Section -->
+<div class="affiliate-highlight-card">
+  <p class="affiliate-title">Still using generic solar panels that underperform?</p>
+<p>
+  The <strong>Renogy 100W Monocrystalline Solar Panel</strong> is a rugged, high-efficiency choice designed for off-grid systems — ideal for cabins, RVs, and mobile setups.
+  <br>
+  <strong>⭐ 4.6 (4,700+ reviews)</strong> — trusted by off-grid builders</p>
+<a href="https://www.amazon.ca/dp/B07GF5JY35?tag=csingh306-20"
+   class="cta-button cta-yellow" target="_blank">
+  View on Amazon
+</a>
+</div>
+
+<!-- 3. Battery Bank Sizing -->
+<section class="calculator" id="batteryCalculatorContainer">
+  <h2>3. Battery Bank Sizing</h2>
+    <!-- Consistent one‑line subtitle -->
+    <p class="subtitle">
+      Size your battery bank so you never run out of power on cloudy nights.
+    </p>
+  <p>
+    This calculator factors in daily energy usage, autonomy days, battery type, and environmental conditions.
+  </p>
+  
+  <form class="battery-form">
+    <!-- Energy Consumption Group -->
+    <fieldset>
+      <!-- Daily Energy Usage -->
+      <div class="input-row">
+        <label for="batteryDailyUsage">
+          Daily Energy Usage (kWh)
+          <span class="tooltip-icon" tabindex="0" title="Enter your total daily energy usage in kilowatt-hours. For example, if you use 5000 Wh daily, that’s 5.0 kWh.">
+            ℹ️
+          </span>
+        </label>
+        <input id="batteryDailyUsage" min="0" placeholder="e.g., 5.0" required step="0.1" type="number" />
+      </div>
+      <!-- Autonomy Days -->
+      <div class="input-row">
+        <label for="batteryDays">
+          Autonomy Days
+          <span class="tooltip-icon" tabindex="0" title="The number of days you want the battery to supply power without sunlight. Common values are 2–3 days.">
+            ℹ️
+          </span>
+        </label>
+        <input id="batteryDays" min="1" placeholder="e.g., 3" required type="number" value="3" />
+      </div>
+    </fieldset>
+    
+    <!-- Battery Specifications Group -->
+    <fieldset>
+      <!-- Battery Type (Dropdown) -->
+      <div class="input-row">
+        <label for="batteryType">
+          Battery Type
+          <span class="tooltip-icon" tabindex="0" title="Different battery chemistries have typical Depth of Discharge (DoD) ranges. Selecting a type will auto-fill a recommended DoD, but you can override it.">
+            ℹ️
+          </span>
+        </label>
+        <select id="batteryType">
+          <option disabled selected value="">--Select Battery Type--</option>
+          <option data-dod="80" value="li-ion">Lithium-Ion (~80% typical)</option>
+          <option data-dod="50" value="lead-acid">Lead-Acid (~50% typical)</option>
+        </select>
+      </div>
+      <!-- Depth of Discharge (DoD%) -->
+      <div class="input-row">
+        <label for="depthDischarge">
+          Depth of Discharge (DoD%)
+          <span class="tooltip-icon" tabindex="0" title="Recommended DoD depends on battery chemistry (e.g., 80% for Lithium, 50% for Lead-Acid). You can adjust this if you have more precise data.">
+            ℹ️
+          </span>
+        </label>
+        <input id="depthDischarge" max="100" min="0" placeholder="Default: 80%" required type="number" value="80" />
+        <div class="override-note" id="dodOverrideNote" aria-live="polite"></div>
+      </div>
+    </fieldset>
+    
+    <!-- Environmental & System Parameters Group -->
+    <fieldset>
+      <!-- Lowest Operating Temperature -->
+      <div class="input-row">
+        <label for="temperature">
+          Lowest Operating Temperature (°C)
+          <span class="tooltip-icon" tabindex="0" title="This factor accounts for reduced battery efficiency at lower temperatures. Warm (Above 20°C) = 1.00, Mild (10–20°C) = 1.11, Cold (0–10°C) = 1.30, Very Cold (Below 0°C) = 1.59.">
+            ℹ️
+          </span>
+        </label>
+        <select id="temperature">
+          <option value="1.00">Warm Climate (Above 20°C)</option>
+          <option value="1.11">Mild (10°C - 20°C)</option>
+          <option value="1.30">Cold (0°C - 10°C)</option>
+          <option value="1.59">Very Cold (Below 0°C)</option>
+        </select>
+      </div>
+      <!-- System Voltage -->
+      <div class="input-row">
+        <label for="systemVoltage">
+          System Voltage (V)
+          <span class="tooltip-icon" tabindex="0" title="Common off-grid system voltages include 12V, 24V, and 48V. Select the voltage that matches your system design.">
+            ℹ️
+          </span>
+        </label>
+        <select id="systemVoltage">
+          <option value="12">12V</option>
+          <option value="24">24V</option>
+          <option value="48">48V</option>
+        </select>
+      </div>
+    </fieldset>
+    
+  <!-- Calculate & Reset buttons -->
+<button type="button"
+class="calculate-btn"
+onclick="calculateBattery()">
+Calculate Battery Bank Size
+</button>
+
+<button type="button"
+class="reset-btn secondary"
+onclick="resetBatteryCalc()">
+Reset
+</button>
+
+  </form>
+  
+  <!-- Interactive Visualization / Example Calculation Section -->
+  <div class="visual-feedback" id="batteryVisual" role="region" aria-live="polite">
+  </div>
+  
+  <!-- Results Section -->
+  <div class="result" id="batteryResult" role="alert"></div>
+  
+
+<!-- Quick Battery Sizing Guide (expanded) -->
+<details class="qs-details">
+  <summary>⚡ Quick Battery Sizing Guide</summary>
+
+  <div class="qs-item">
+    <p>
+      A household with <strong>1–2 occupants</strong> typically uses <strong>2–4 kWh/day</strong>. For this, a battery bank of 
+      <strong>5–10 kWh (Li-ion)</strong> or <strong>8–12 kWh (lead-acid)</strong> is ideal—enough for lighting, device charging, and a compact fridge in a tiny cabin, camper van, or weekend cottage.
+    </p>
+  </div>
+
+  <div class="qs-item">
+    <p>
+      For <strong>3–4 occupants</strong>, daily energy usage usually ranges between <strong>5–8 kWh</strong>. For this, a system with 
+      <strong>12–18 kWh of Li-ion</strong> or <strong>18–24 kWh of lead-acid</strong> storage is suitable to cover typical household needs like a full-size fridge, lighting, a TV or laptop, and a water pump.
+    </p>
+  </div>
+
+  <div class="qs-item">
+    <p>
+      Larger homes with <strong>5+ occupants</strong> often consume <strong>8–12 kWh/day</strong>, requiring <strong>20–30 kWh (Li-ion)</strong> or <strong>32–48 kWh (lead-acid)</strong>—enough for multiple appliances, a washing machine, and occasional power tools.
+    </p>
+  </div>
+
+  <p class="qs-note">
+    These recommendations assume <strong>one-day autonomy</strong>, with 80% usable capacity for lithium-ion and 50% for lead-acid batteries.  
+    This guide is designed for off-grid living in the <strong>U.S. and Canada</strong>.  
+    Sources:
+    <a href="https://www.energy.gov/energysaver/estimating-appliance-and-home-electronic-energy-use" target="_blank" rel="noopener">Energy Saver</a> &amp;
+    <a href="https://www.solarreviews.com/blog/what-is-an-off-grid-solar-system" target="_blank" rel="noopener">SolarReviews</a>.
+  </p>
+</details>
+</section>
+ <!-- Affiliate Recommendation Section -->
+<div class="affiliate-highlight-card">
+  <p class="affiliate-title">Will your battery hold up when the temperature drops?</p>
+  <p>
+    The <strong>Litime 12V 100Ah LiFePO₄ Battery</strong> is built for harsh conditions — with deep-cycle reliability, built-in BMS, and cold-weather resistance that keeps your system running through freezing nights.
+    <br>
+    <strong>⭐ 4.6 (850+ reviews)</strong> — winter-ready and off-grid tough</p>
+  <a href="https://www.amazon.ca/dp/B0C8T1FD7M?tag=csingh306-20"
+     class="cta-button cta-yellow" target="_blank">
+    View on Amazon
+  </a>  
+</div>
+<!-- End of Battery Calculator Section -->
+
+<!-- 4. Inverter Calculator -->
+<section class="calculator" id="inverterCalculatorContainer">
+  <h2>4. Inverter Sizing</h2>
+  <p class="subtitle">
+    Ensure your inverter can handle the combined wattage of all your appliances running simultaneously, plus any startup surges.
+  </p>
+  <p>
+    This calculator factors in your peak power usage, safety margin, and surge factor to recommend the right inverter capacity.
+  </p>
+
+  <div class="input-group">
+    <label for="totalWattage">
+      Peak Power Usage (W)
+      <span class="tooltip-icon" title="Enter the total wattage of all appliances that might run at once. For instance, a 1000W continuous load may require a higher inverter rating when safety margin and surge factor are applied.">
+        ℹ️
+      </span>
+    </label>
+    <input id="totalWattage" min="0" placeholder="Enter peak wattage" required type="number" />
+  </div>
+
+  <div class="input-group">
+    <label for="safetyMargin">
+      Safety Margin
+      <span class="tooltip-icon" title="Apply a safety multiplier (e.g., 1.25) to ensure the inverter is not operating at its limit. This accounts for real-world inefficiencies and helps extend inverter life.">
+        ℹ️
+      </span>
+    </label>
+    <input id="safetyMargin" min="1" step="0.05" placeholder="e.g., 1.25" required type="number" value="1.25" />
+  </div>
+
+  <div class="input-group">
+    <label for="surgeMultiplier">
+      Surge Factor
+      <span class="tooltip-icon" title="For inductive loads like motors, a surge factor of 1.3–3× is common. 1.3 is typical for small motors, 2–3 for larger motors.">
+        ℹ️
+      </span>
+    </label>
+    <input id="surgeMultiplier" max="5" min="1" step="0.1" placeholder="e.g., 1.3" required type="number" value="1.3"/>
+  </div>
+
+  <button class="calculate-btn" onclick="calculateInverter()">Calculate Inverter Size</button>
+  <button class="reset-btn" onclick="resetInverterCalc()">Reset</button>
+
+  <!-- Interactive Visualization Placeholder -->
+  <div class="visual-feedback" id="inverterVisual" role="region" aria-live="polite">
+    <p>This ensures the inverter can handle both continuous operation and short-term surges.</p>
+  </div>
+  <!-- Results Section -->
+  <div class="result" id="inverterResult" role="alert"></div>
+
+  <!-- Quick Inverter Sizing Guide (expanded) -->
+  <details class="qs-details">
+    <summary>⚡ Quick Inverter Sizing Guide</summary>
+
+    <div class="qs-item">
+      <p>
+        For off-grid systems, inverter size should match your peak load and system voltage. As a general rule:
+        use a <strong>12V system</strong> for inverters up to <strong>1,000W</strong>, a <strong>24V system</strong> for 
+        <strong>1,000–2,000W</strong>, and a <strong>48V system</strong> for <strong>2,000–4,000W</strong>.
+        If your load exceeds these ranges, consider using <strong>multiple inverters in parallel</strong>.
+      </p>
+    </div>
+
+    <div class="qs-item">
+      <p>
+        Choosing a higher system voltage not only supports larger inverters but also helps minimize voltage drop,
+        reduces the thickness (and cost) of DC wiring, and improves overall system efficiency.
+      </p>
+    </div>
+    <p class="qs-note">
+      These recommendations follow best practices for off-grid inverter sizing and voltage configuration.  
+      Source: <a href="https://www.cleanenergyreviews.info/blog/designing-off-grid-hybrid-solar-systems" target="_blank" rel="noopener">Clean Energy Reviews</a>.
+    </p>    
+    
+  </details>
+  </section>
+  
+  <!-- Affiliate Recommendation Section -->
+<div class="affiliate-highlight-card">
+  <p class="affiliate-title">Worried your inverter might damage sensitive devices?</p>
+<p>
+  The <strong>Victron Energy 375VA Pure Sine Wave Inverter</strong> delivers clean, stable power for laptops, routers, and precision electronics — with zero interference and top-tier reliability.
+  <br>
+  <strong>⭐ 4.7 (450+ reviews)</strong> — trusted by off-grid pros</p>
+<a href="https://www.amazon.ca/Victron-Energy-Phoenix-Inverter-VE-Direct/dp/B01N0W4H34?tag=csingh306-20"
+   class="cta-button cta-yellow" target="_blank">
+  View on Amazon
+</a>
+</div>
+
+<!-- End of Inverter Calculator Section -->
+
+<!-- Quick Guide Section -->
+<div class="quick-guide">
+  <h2>Formulas and Calculation Methods</h2>
+  <p>The Off-Grid Solar Calculator uses standard industry formulas to help you size your solar system accurately. Here's how each section calculates your results:</p>
+
+  <ul>
+    <li>
+      <strong>1. Load Calculator Formula:</strong> 
+      <br>
+      Monthly Energy Consumption (kWh/month) = (Appliance Wattage × Hours Used Per Month) ÷ 1000
+      <br>
+      We calculate how much energy each appliance uses per month, then total all appliances to find your full monthly load.
+    </li>
+
+    <li>
+      <strong>2. Solar Panel Calculator Formula:</strong> 
+      <br>
+      Daily Energy Usage (kWh/day) = Monthly Energy Consumption ÷ 30
+      <br>
+      Required Solar Array Size (kW) = Daily Energy Usage ÷ (Peak Sun Hours × System Efficiency)
+      <br>
+      Number of Panels Needed = (Required Solar Array Size × 1000) ÷ Panel Wattage
+      <br>
+      This determines how much solar capacity you need to meet your daily energy needs, adjusted for local sunlight conditions and system efficiency.
+    </li>
+
+    <li>
+      <strong>3. Battery Bank Calculator Formula:</strong> 
+      <br>
+      Total Storage Required (kWh) = Daily Energy Usage × Autonomy Days
+      <br>
+      Adjusted Storage (kWh) = Total Storage Required ÷ (Depth of Discharge × Temperature Derating Factor)
+      <br>
+      Battery Bank Capacity (Ah) = (Adjusted Storage × 1000) ÷ System Voltage
+      <br>
+      This ensures you have enough stored energy to cover nights and cloudy days, factoring in battery performance and environmental conditions.
+    </li>
+
+    <li>
+      <strong>4. Inverter Sizing Formula:</strong> 
+      <br>
+      Minimum Inverter Size (W) = Peak Power Usage × Safety Margin
+      <br>
+      Recommended Surge Rating (W) = Minimum Inverter Size × Surge Factor
+      <br>
+      We recommend an inverter that can safely handle both your peak continuous load and short-term appliance startup surges.
+    </li>
+
+    <li>
+      <strong>Important Reminder:</strong> 
+      <br>
+      These calculators provide a reliable starting point for system planning. Always consult a professional installer to finalize your solar setup, ensure proper system balancing, and meet local regulatory standards.
+    </li>
+  </ul>
+
+  <p><a class="back-to-top-btn" href="#home">Back to Top</a></p>
+</div>
+
+<!-- Book Recommendation Card (Vertical Centered) -->
+<div class="book-card">
+
+  <div class="book-image">
+    <a href="https://www.amazon.ca/dp/1546567119?tag=csingh306-20" target="_blank">
+      <img src="https://offgridsolarsystem.ca/images/mobile-solar-power-made-easy.jpg" alt="Mobile Solar Power Made Easy book cover">
+    </a>
+  </div>
+
+  <p class="book-title">Mobile Solar Power Made Easy!</p>
+  <p class="affiliate-title">Want to design your own off-grid solar system without hiring an expert?</p>
+  <p>
+    <strong>Mobile Solar Power Made Easy</strong> by William Errol Prowse IV breaks it down step-by-step — perfect for RVs, vans, and beginner off-grid projects.
+    <br>
+    <strong>⭐ 4.6 (4,500+ reviews)</strong> — trusted by DIY solar users</p>
+  <p class="book-reviews">
+    Master solar design for just <span class="price-highlight">$10</span> — no technical background required.
+  </p>
+  <a class="cta-button cta-yellow"
+     href="https://www.amazon.ca/dp/1546567119?tag=csingh306-20"
+     target="_blank">View Book on Amazon
+  </a>
+
+</div>
+
+<!-- FAQ Section -->
+<div class="faq">
+<h2>Frequently Asked Questions (FAQs) About Solar Calculations</h2>
+<h3>1. How do I calculate my energy usage for the Load Calculator?</h3>
+<p>
+        To calculate your daily energy consumption, input each appliance’s power rating (in watts) and 
+        how many hours per day it runs into the 
+        <a href="#loadCalculatorContainer">Load Calculator</a>. 
+        The calculator multiplies watts by hours to determine daily kilowatt-hours (kWh). 
+        <em>If you’re unsure of an appliance’s wattage, check its label or user manual, or measure it with a wattmeter for accuracy.</em>
+</p>
+<h3>2. What if my appliance label shows amps (A) instead of watts (W)?</h3>
+<p>
+  Many North-American devices list only the current draw (<strong>amps - A</strong>).   
+  Simply convert it to watts.
+</p>
+  <li><strong>Watts = Amps × Volts</strong></li>
+  <li>Most household outlets in the U.S. / Canada are <strong>120 V</strong> (large appliances may use 240 V).</li>
+  <li>Example: <code>2.5 A × 120 V ≈ 300 W</code></li>
+  <li>If the label shows a range (e.g., “0.8 A – 1.2 A”), use the higher value for a safe estimate.</li>
+<p class="qs-note">
+  <em>Source:&nbsp;U.S. Department of Energy – Appliance Labeling Guidelines.</em>
+</p>
+
+<h3>3. How can I determine the number of solar panels I need?</h3>
+<p>
+        The <a href="#solarPanelCalculatorContainer">Solar Panel Calculator</a> uses your daily energy usage, 
+        local sun hours, system efficiency, and panel wattage to estimate how many panels you’ll need. 
+        This ensures you generate enough power each day—especially critical for off-grid systems.
+      </p>
+<h3>4. What does "autonomy" mean, and how does it affect the Battery Bank Calculator?</h3>
+<p>
+        “Autonomy” is the number of days your system can operate without sunlight. 
+        In the <a href="#batteryCalculatorContainer">Battery Bank Calculator</a>, autonomy is used alongside your daily usage 
+        to size your battery storage, ensuring you have power during extended cloudy periods or overnight.
+      </p>
+<h3>5. What should I consider when sizing an inverter?</h3>
+<p>
+        An inverter must handle the combined wattage of all running appliances (its continuous rating) 
+        and short-term surges (e.g., motor startup). The 
+        <a href="#inverterCalculatorContainer">Inverter Calculator</a> helps you pick an inverter that meets both requirements. 
+        Consider whether you need a pure sine wave inverter and check brand-specific surge capabilities for reliable performance.
+      </p>
+<h3>6. Why do I need appliance-specific information for accurate results?</h3>
+<p>
+        Each device’s wattage and daily usage can vary significantly. Entering generic estimates can lead to 
+        oversizing or undersizing your system. Providing precise appliance details and local sun-hour data 
+        ensures the calculators produce reliable estimates—particularly for off-grid designs.
+      </p>
+<h3>7. Is this calculator sufficient for final system design?</h3>
+<p>
+        While these calculators provide reliable estimates, we strongly recommend consulting a professional solar installer 
+        before finalizing your system. A professional can account for factors like local regulations, tilt angles, 
+        shading, temperature effects, and brand-specific warranties—ensuring a safe, code-compliant, and optimized solar setup.
+      </p>
+</div>
+<!-- Off‑Grid Solar System Section -->
+<div class="faq">
+  <h2>What is an Off‑Grid Solar System?</h2>
+  <p>
+    An off‑grid solar system is a self‑sufficient power setup that runs entirely
+    independent of the public grid. Sunlight is converted to electricity,
+    stored in batteries, and managed by inverters and charge controllers to
+    deliver reliable energy for cabins, remote homes, RVs, boats, and more.
+    The result is complete energy autonomy tailored to your location and
+    consumption needs.
+  </p>
+
+  <h3>Key Components of an Off‑Grid System</h3>
+  <ul>
+    <li><strong>Solar panels :</strong> capture sunlight and produce DC power.</li>
+    <li><strong>Storage batteries :</strong> store energy for nights and cloudy days.</li>
+    <li><strong>Power center :</strong> pre‑wired inverter, charge controller, and distribution hardware.</li>
+    <li><strong>Mounting/racking :</strong> secures panels and optimizes tilt and orientation.</li>
+    <li><strong>Additional equipments :</strong> backup generators, water pumps, lightning protection, efficient appliances, etc.</li>
+  </ul>
+</div>
+
+  <!-- Section 1: Solar Panels -->
+  <button class="accordion-header" onclick="toggleOffGridSection('solarPanelsSection', this)">
+    <span class="arrow">►</span> 1. Solar Panels: The Energy Generators
+  </button>
+  <div class="accordion-content" id="solarPanelsSection">
+    <p>
+      Solar panels convert sunlight into electricity using photovoltaic cells. They are the cornerstone of any off-grid system, and advanced models incorporate features like bypass diodes and microinverters to optimize performance in partially shaded or variable conditions.
+    </p>
+    <h4>Sizing Your Array</h4>
+    <p>
+      The number and capacity of panels needed depend on your daily energy consumption, local peak sun hours, and overall system efficiency. Many advanced systems are designed to cover up to 8–9 months of energy needs on solar power alone—accounting for seasonal variations.
+    </p>
+    <h4>Seasonal Considerations</h4>
+    <p>
+      In winter or during extended cloudy periods, solar output decreases. To ensure adequate power during these times, additional sources like backup generators or wind turbines are often integrated into the overall design.
+    </p>
+  </div>
+  
+  <!-- Section 2: Storage Batteries -->
+  <button class="accordion-header" onclick="toggleOffGridSection('batteriesSection', this)">
+    <span class="arrow">►</span> 2. Storage Batteries: The Energy Reservoir
+  </button>
+  <div class="accordion-content" id="batteriesSection">
+    <p>
+      Batteries store the electricity generated by your solar panels so that power is available at night or during overcast conditions. They act as a buffer to balance generation and consumption, ensuring a steady, reliable power supply.
+    </p>
+    <h4>Choosing the Right Battery</h4>
+    <p>
+      Advanced systems typically utilize deep-cycle lead-acid or modern lithium (LiFePO4) batteries. Key considerations include the battery’s depth of discharge (DoD), cycle life, maintenance requirements, and temperature sensitivity. Using a Battery Bank Calculator can help determine the optimal capacity based on your energy needs and desired days of autonomy.
+    </p>
+  </div>
+  
+  <!-- Section 3: The Power Center -->
+  <button class="accordion-header" onclick="toggleOffGridSection('powerCenterSection', this)">
+    <span class="arrow">►</span> 3. The Power Center: Command Hub of Your System
+  </button>
+  <div class="accordion-content" id="powerCenterSection">
+    <p>
+      The power center is the nerve center where all major components converge. It houses your inverter, charge controller, and distribution panels, ensuring that energy is efficiently converted and managed.
+    </p>
+    <h4>Integrated Components</h4>
+    <ul>
+      <li><strong>Inverter:</strong> Converts DC power to AC power for home appliances.</li>
+      <li><strong>Charge Controller:</strong> Regulates the power input to protect batteries from overcharge and inefficiencies.</li>
+      <li><strong>Monitoring Systems:</strong> Provide real-time performance data, enabling fine-tuning and proactive maintenance.</li>
+    </ul>
+    <p>
+      <em>Pro Tip:</em> For those without extensive electrical expertise, opting for a pre-assembled power center can minimize wiring errors and benefit from manufacturer warranties.
+    </p>
+  </div>
+  
+  <!-- Section 4: Mounting and Racking Systems -->
+  <button class="accordion-header" onclick="toggleOffGridSection('mountingSection', this)">
+    <span class="arrow">►</span> 4. Solar Panel Mounting and Racking Systems
+  </button>
+  <div class="accordion-content" id="mountingSection">
+    <p>
+      Proper mounting is crucial for maximizing energy capture. A well-designed racking system ensures that your panels are optimally tilted and oriented to receive the maximum sunlight throughout the year.
+    </p>
+    <h4>Installation Options</h4>
+    <ul>
+      <li><strong>Roof Mounting:</strong> Best suited for urban or space-limited environments. It requires careful planning to ensure structural integrity and adherence to local codes.</li>
+      <li><strong>Ground Mounting:</strong> Offers flexibility to adjust the tilt seasonally and is often preferred in rural areas.</li>
+    </ul>
+  </div>
+  
+  <!-- Section 5: Additional Equipment -->
+  <button class="accordion-header" onclick="toggleOffGridSection('additionalEquipmentSection', this)">
+    <span class="arrow">►</span> 5. Additional Equipment for Off-Grid Living
+  </button>
+  <div class="accordion-content" id="additionalEquipmentSection">
+    <p>
+      Enhancing your core system with additional equipment can improve overall performance, safety, and convenience.
+    </p>
+    <ul>
+      <li><strong>Backup Generators:</strong> Provide supplementary power during prolonged low-sun conditions or high-demand periods.</li>
+      <li><strong>Water Pumps and Filtration:</strong> Essential for maintaining an off-grid water supply in remote settings.</li>
+      <li><strong>Efficient Appliances:</strong> Energy-efficient devices reduce overall system load and optimize operating costs.</li>
+      <li><strong>Lightning Protection and Grounding:</strong> Protect your system from voltage surges and adverse weather conditions.</li>
+    </ul>
+    <p>
+      Routine maintenance like cleaning panels and monitoring battery health is critical to prolonging system life.
+    </p>
+  </div>
+  
+  <!-- Section 6: Specialized Off-Grid Systems: RV and Marine Applications -->
+  <button class="accordion-header" onclick="toggleOffGridSection('specializedSection', this)">
+    <span class="arrow">►</span> Specialized Off-Grid Systems: RV and Marine Applications
+  </button>
+  <div class="accordion-content" id="specializedSection">
+    <p>
+      RV and marine solar systems share many core components with residential off-grid setups but face unique challenges. Limited space, constant movement, and environmental factors like vibration or corrosion require specialized designs.
+    </p>
+    <ul>
+      <li><strong>Limited Panel Space:</strong> Compact, modular arrays are essential in confined areas and may rely on supplemental power sources.</li>
+      <li><strong>Corrosion and Vibration:</strong> Components need to be robust and corrosion-resistant, with secure mounting to withstand continuous movement.</li>
+      <li><strong>Enhanced Grounding:</strong> Specialized grounding solutions are critical to ensure safety and longevity in dynamic environments.</li>
+    </ul>
+  </div>
+  
+</div>
+<!-- End of Off-Grid Solar System Section -->
+
+<!-- References Section -->
+<div class="references-section" id="references">
+<div class="container">
+<h2 class="section-heading">Scientific References Supporting Solar Power Calculations</h2>
+<p>
+        These peer-reviewed studies and official resources back the formulas and assumptions 
+        used in our Load, Solar Panel, Battery, and Inverter Calculators. 
+        For deeper insights, see the links below:
+      </p>
+<div class="solar-solution-image">
+<img alt="Diagram showing how each calculator feeds into Off-Grid Solar System" loading="lazy" src="images/your-solar-solution.png"/>
+</div>
+<ul class="references-list">
+<li>
+<strong>Load Calculator:</strong><br/>
+<a href="https://www.energy.gov/energysaver/estimating-appliance-and-home-electronic-energy-use" rel="noopener noreferrer" target="_blank">
+            Estimating Appliance &amp; Home Electronic Energy Use – U.S. Department of Energy
+          </a><br/>
+<em>(Official methods to measure appliance wattage and daily usage.)</em>
+</li>
+<li>
+<strong>Solar Panel Calculator:</strong><br/>
+<a href="https://www.sciencedirect.com/science/article/pii/S2405844023016213" rel="noopener noreferrer" target="_blank">
+            Optimal Sizing of Solar PV Panels Based on Energy Needs – NREL
+          </a><br/>
+<em>(Discusses panel efficiency, location-specific irradiance, and system sizing.)</em>
+</li>
+<li>
+<strong>Battery Bank Calculator:</strong><br/>
+<a href="https://www.sciencedirect.com/science/article/abs/pii/S1364032118301436" rel="noopener noreferrer" target="_blank">
+            Battery Storage Systems for Solar Energy: Sizing &amp; Efficiency – Renewable Energy Journal
+          </a><br/>
+<em>(Examines autonomy days, DoD, and battery voltage for off-grid storage.)</em>
+</li>
+<li>
+<strong>Inverter Calculator:</strong><br/>
+<a href="https://ieeexplore.ieee.org/abstract/document/9254762" rel="noopener noreferrer" target="_blank">
+            Designing Inverter Systems for Renewable Energy – IEEE Power Electronics Society
+          </a><br/>
+<em>(Focuses on continuous vs. surge wattage, wave form considerations, and safety.)</em>
+</li>
+</ul>
+<div class="back-to-top">
+<a class="back-to-top-btn" href="#home">Back to Top</a>
+</div>
+</div>
+</div>
+<!-- About Section -->
+<section id="about">
+<div class="container about-container">
+<h2 class="section-heading">About Us</h2>
+<p>
+  Founded by a group of passionate solar enthusiasts, we’re dedicated to simplifying renewable energy for everyone. While we’re still gaining firsthand experience in the field, our tools are updated regularly based on extensive research and community feedback, ensuring you have access to the latest insights on off-grid solutions.
+</p>
+<p>
+<strong>Connect on</strong>
+<a href="https://www.facebook.com/people/Off-Grid-Solar-System-Solutions/61571455742696/" style="text-decoration: none;" target="_blank">
+<button style="border: none; padding: 10px 20px; margin: 5px; font-size: 14px; font-weight: bold; cursor: pointer; color: white; border-radius: 5px; background-color: #4267B2;">
+            Facebook
+          </button>
+</a>
+</p>
+</div>
+</section>
+<!-- Contact Section -->
+<section id="contact">
+  <div class="container contact-container">
+    <h2 class="section-heading">Contact Us</h2>
+    <p>We value your feedback, inquiries, and advertising opportunities. Please use the form below to reach out to us.</p>
+    <form id="emailForm" novalidate>
+      <div class="input-group">
+        <label for="userName">Your Name:</label>
+        <input id="userName" name="userName" placeholder="Enter your name" required type="text" aria-label="Your Name">
+        <span class="error-message" id="nameError" aria-live="polite"></span>
+      </div>
+      <div class="input-group">
+        <label for="userEmail">Your Email:</label>
+        <input id="userEmail" name="userEmail" placeholder="Enter your email" required type="email" aria-label="Your Email">
+        <span class="error-message" id="emailError" aria-live="polite"></span>
+      </div>
+      <div class="input-group">
+        <label for="message">Message:</label>
+        <textarea id="message" name="message" placeholder="Enter your message" rows="4" required aria-label="Message"></textarea>
+        <span class="error-message" id="messageError" aria-live="polite"></span>
+      </div>
+      <div class="form-actions">
+        <button type="submit" id="submitForm">Send</button>
+      </div>
+      <div id="formFeedback" class="form-feedback" aria-live="polite"></div>
+    </form>
+  </div>
+</section>
+
+<script>
+  // Reference form elements
+  const form = document.getElementById('emailForm');
+  const nameError = document.getElementById('nameError');
+  const emailError = document.getElementById('emailError');
+  const messageError = document.getElementById('messageError');
+  const formFeedback = document.getElementById('formFeedback');
+
+  // Clear error messages
+  function clearErrors() {
+    nameError.textContent = '';
+    emailError.textContent = '';
+    messageError.textContent = '';
+  }
+
+  // Validate form inputs
+  function validateForm() {
+    let isValid = true;
+    clearErrors();
+
+    if (document.getElementById('userName').value.trim() === '') {
+      nameError.textContent = 'Please enter your name.';
+      isValid = false;
+    }
+    if (document.getElementById('userEmail').value.trim() === '') {
+      emailError.textContent = 'Please enter your email.';
+      isValid = false;
+    }
+    if (document.getElementById('message').value.trim() === '') {
+      messageError.textContent = 'Please enter your message.';
+      isValid = false;
+    }
+    return isValid;
+  }
+
+  // Handle AJAX form submission to PHPMailer endpoint
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    formFeedback.textContent = ''; // Clear previous messages
+
+    if (!validateForm()) {
+      return;
+    }
+
+    const formData = new FormData(form);
+
+    fetch('./submit_form_endpoint.php', {
+      method: 'POST',
+      body: formData
+    })
+    .then(response => {
+      if (!response.ok) {
+         throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .then(result => {
+      if (result.success) {
+        formFeedback.textContent = 'Thank you for your message!';
+        form.reset();
+      } else {
+        formFeedback.textContent = result.message || 'An error occurred. Please try again.';
+      }
+    })
+    .catch(error => {
+      console.error('Fetch error:', error);
+      formFeedback.textContent = 'Form submission failed. Please try again later.';
+    });
+  });
+</script>
+
+
+<!-- Feedback Section -->
+<section id="feedback">
+  <div class="container">
+    <h2 class="feedback-heading">Your Feedback Matters</h2>
+    <p>
+      Help us improve these calculators. Your suggestions guide future enhancements and ensure more accurate results.
+    </p>
+    <p>
+      <strong>Your donations go toward maintaining our website and improving our tools.</strong>
+    </p>
+
+    <div class="feedback-actions">
+      <a class="coffee-btn btn-standard" href="https://buymeacoffee.com/chandannsiz" target="_blank" title="Support our work">
+        Donate a ☕
+      </a>
+      <a href="#contact" class="feedback-btn btn-standard">
+        Feedback ✉️
+      </a>
+    </div>
+
+    <p>Thank you for helping us make solar simpler for everyone!</p>
+  </div>
+</section>
+
+<!-- Amazon OneTag Script for OneLink -->
+<script src="https://resources.assoc-amazon.com/onetag.js"></script>
+
+<!-- Placeholder for dynamically loaded footer -->
+<div id="footer-placeholder"></div>
+
+<!-- Load modular content -->
+<script src="js/loadSections.js" defer></script>
+<script src="js/loadCalculator.js" defer></script>
+<script src="js/panelCalculator.js" defer></script>
+<script src="js/batteryCalculator.js" defer></script>
+<script src="js/inverterCalculator.js" defer></script>
+<script>
+  window.onload = function () {
+    populateApplianceDropdown();
+  };
+</script>
+</body>
+</html>
