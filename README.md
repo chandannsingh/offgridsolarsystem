@@ -2,7 +2,7 @@
 
 A fully modular, mobile-friendly website that offers free solar system sizing tools for off-grid users. Built to empower vanlifers, cabin owners, and DIY solar enthusiasts with accurate calculators, helpful recommendations, and affiliate-supported product tips.
 
-![screenshot](images/solar-calculator-preview.png) <!-- optional if you add a preview image -->
+![screenshot](solar-calculator-preview.png) <!-- optional if you add a preview image -->
 
 ## 🔧 Features
 
